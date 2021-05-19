@@ -8,6 +8,8 @@ int line=0;
 typedef union {
 	int type_int;
 	int type_float;
+	char type_bool[5];
+	char type_string[1024];
 	char type_id[32];
 	struct node *ptr;
 } YYLVAL;
@@ -55,12 +57,12 @@ type        ("bool"|"void"|"char"|"int"|"string")
 "continue"  {printf("line%d:(继续循环,%s)\n",++line,yytext);return CONTINUE;}
 {type}      {printf("line%d:(类型,%s)\n",++line,yytext);strcpy(yylval.type_id,  yytext);return TYPE;}
 {Escape}    {printf("line%d:(转义字符,%s)\n",++line,yytext);}
-{boolConstant}  {printf("line%d:(布尔常量,%s)\n",++line,yytext);return BOOL;}
+{boolConstant}  {printf("line%d:(布尔常量,%s)\n",++line,yytext);strcpy(yylval.type_bool,  yytext);return BOOL;}
 {intConstant}   {printf("line%d:(整型常量,%s)\n",++line,yytext);yylval.type_int=atoi(yytext);return INT;}
-{stringConstant}    {printf("line%d:(字符串常量,%s)\n",++line,yytext);return STRING;}
+{stringConstant}    {printf("line%d:(字符串常量,%s)\n",++line,yytext);strcpy(yylval.type_string,  yytext);return STRING;}
 ";"         {printf("line%d:(分号,%s)\n",++line,yytext);return SEMI;}
 ","         {printf("line%d:(逗号,%s)\n",++line,yytext);return COMMA;}
-{compare}   { printf("line%d:(比较运算,%s)\n",++line,yytext);strcpy(yylval.type_id, yytext);;return RELOP;}
+{compare}   { printf("line%d:(比较运算,%s)\n",++line,yytext);strcpy(yylval.type_id, yytext);return RELOP;}
 "="         {printf("line%d:(赋值运算,%s)\n",++line,yytext);return ASSIGNOP;}
 "+"         {printf("line%d:(求和运算,%s)\n",++line,yytext);return PLUS;}
 "-"         {printf("line%d:(求差运算,%s)\n",++line,yytext);return MINUS;}
@@ -87,6 +89,6 @@ type        ("bool"|"void"|"char"|"int"|"string")
 %%
 int yywrap() 
 { 
-	getchar();
+	system("pause");
     return 1; 
 } 

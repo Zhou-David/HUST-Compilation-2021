@@ -15,7 +15,7 @@ void display(struct ASTNode *,int);
 %union {
 	int    type_int;
     float type_float;
-	char*  type_string;
+	char  type_string[1024];
     char  type_bool[5];
 	char   type_id[32];
 	struct ASTNode *ptr;
@@ -90,7 +90,7 @@ Stmt:   Exp SEMI    {$$=mknode(1,EXP_STMT,yylineno,$1);}
       | IF LP Exp RP Stmt %prec LOWER_THEN_ELSE   {$$=mknode(2,IF_THEN,yylineno,$3,$5);}
       | IF LP Exp RP Stmt ELSE Stmt   {$$=mknode(3,IF_THEN_ELSE,yylineno,$3,$5,$7);}
       | WHILE LP Exp RP Stmt {$$=mknode(2,WHILE,yylineno,$3,$5);}
-      | FOR LP Exp SEMI Exp SEMI Exp RP Stmt {$$=mknode(2,FOR,yylineno,$3,$5);} 
+      | FOR LP Exp SEMI Exp SEMI Exp RP {$$=mknode(2,FOR,yylineno,$3,$5);} 
       ;
 DefList: {$$=NULL; }
         | Def DefList {$$=mknode(2,DEF_LIST,yylineno,$1,$2);}
@@ -127,7 +127,7 @@ Exp:    Exp ASSIGNOP Exp {$$=mknode(2,ASSIGNOP,yylineno,$1,$3);strcpy($$->type_i
       | ID            {$$=mknode(0,ID,yylineno);strcpy($$->type_id,$1);}
       | INT           {$$=mknode(0,INT,yylineno);$$->type_int=$1;$$->type=INT;}
       | FLOAT         {$$=mknode(0,FLOAT,yylineno);$$->type_float=$1;$$->type=FLOAT;}
-      | STRING        {$$=mknode(0,STRING,yylineno);$$->type_string=$1;$$->type=STRING;}
+      | STRING        {$$=mknode(0,STRING,yylineno);strcpy($$->type_string,$1);$$->type=STRING;}
       | BOOL          {$$=mknode(0,BOOL,yylineno);strcpy($$->type_bool,$1);;$$->type=BOOL;}
       ;
 Args:    Exp COMMA Args    {$$=mknode(2,ARGS,yylineno,$1,$3);}

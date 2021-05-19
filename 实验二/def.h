@@ -15,7 +15,7 @@ struct opn{
         float   const_float;    //浮点常数值，立即数
         char    const_char;     //字符常数值，立即数
         char    const_bool[5];
-        char*   const_string;
+        char    const_string[1024];
         char    id[33];         //变量或临时变量的别名或标号字符串
         };
     int level;                  //变量的层号，0表示是全局变量，数据保存在静态数据区
@@ -36,7 +36,7 @@ struct ASTNode {
 		  int type_int;                 //由整常数生成的叶结点
 		  float type_float;               //由浮点常数生成的叶结点
           char type_bool[5];
-          char* type_string;
+          char type_string[1024];
 	      };
     struct ASTNode *ptr[4];         //由kind确定有多少棵子树
     int place;                     //存放（临时）变量在符号表的位置序号

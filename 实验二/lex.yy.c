@@ -575,6 +575,8 @@ int line=0;
 typedef union {
 	int type_int;
 	int type_float;
+	char type_bool[5];
+	char type_string[1024];
 	char type_id[32];
 	struct node *ptr;
 } YYLVAL;
@@ -587,7 +589,7 @@ typedef union {
 /*字符串常量*/
 /*比较运算符*/
 /*变量类型*/
-#line 591 "lex.yy.c"
+#line 593 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -769,9 +771,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 46 "test.lex"
+#line 48 "test.lex"
 
-#line 775 "lex.yy.c"
+#line 777 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -866,212 +868,212 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 47 "test.lex"
+#line 49 "test.lex"
 {printf("line%d:(注释行,%s)\n",++line,yytext);}//匹配注释的正则表达式
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 48 "test.lex"
+#line 50 "test.lex"
 {printf("line%d:(注释块,%s)\n",++line,yytext);}//匹配注释的正则表达式
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 49 "test.lex"
+#line 51 "test.lex"
 {printf("line%d:(函数返回,%s)\n",++line,yytext);return RETURN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "test.lex"
+#line 52 "test.lex"
 {printf("line%d:(条件判断,%s)\n",++line,yytext);return IF;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 51 "test.lex"
+#line 53 "test.lex"
 {printf("line%d:(条件判断,%s)\n",++line,yytext);return ELSE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 52 "test.lex"
+#line 54 "test.lex"
 {printf("line%d:(循环,%s)\n",++line,yytext);return WHILE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "test.lex"
+#line 55 "test.lex"
 {printf("line%d:(循环,%s)\n",++line,yytext);return FOR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 54 "test.lex"
+#line 56 "test.lex"
 {printf("line%d:(跳出循环,%s)\n",++line,yytext);return BREAK;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 55 "test.lex"
+#line 57 "test.lex"
 {printf("line%d:(继续循环,%s)\n",++line,yytext);return CONTINUE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 56 "test.lex"
+#line 58 "test.lex"
 {printf("line%d:(类型,%s)\n",++line,yytext);strcpy(yylval.type_id,  yytext);return TYPE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 57 "test.lex"
+#line 59 "test.lex"
 {printf("line%d:(转义字符,%s)\n",++line,yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 58 "test.lex"
-{printf("line%d:(布尔常量,%s)\n",++line,yytext);return BOOL;}
+#line 60 "test.lex"
+{printf("line%d:(布尔常量,%s)\n",++line,yytext);strcpy(yylval.type_bool,  yytext);return BOOL;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 59 "test.lex"
+#line 61 "test.lex"
 {printf("line%d:(整型常量,%s)\n",++line,yytext);yylval.type_int=atoi(yytext);return INT;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 60 "test.lex"
-{printf("line%d:(字符串常量,%s)\n",++line,yytext);return STRING;}
+#line 62 "test.lex"
+{printf("line%d:(字符串常量,%s)\n",++line,yytext);strcpy(yylval.type_string,  yytext);return STRING;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 61 "test.lex"
+#line 63 "test.lex"
 {printf("line%d:(分号,%s)\n",++line,yytext);return SEMI;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 62 "test.lex"
+#line 64 "test.lex"
 {printf("line%d:(逗号,%s)\n",++line,yytext);return COMMA;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 63 "test.lex"
-{ printf("line%d:(比较运算,%s)\n",++line,yytext);strcpy(yylval.type_id, yytext);;return RELOP;}
+#line 65 "test.lex"
+{ printf("line%d:(比较运算,%s)\n",++line,yytext);strcpy(yylval.type_id, yytext);return RELOP;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 64 "test.lex"
+#line 66 "test.lex"
 {printf("line%d:(赋值运算,%s)\n",++line,yytext);return ASSIGNOP;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 65 "test.lex"
+#line 67 "test.lex"
 {printf("line%d:(求和运算,%s)\n",++line,yytext);return PLUS;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 66 "test.lex"
+#line 68 "test.lex"
 {printf("line%d:(求差运算,%s)\n",++line,yytext);return MINUS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 67 "test.lex"
+#line 69 "test.lex"
 {printf("line%d:(求和赋值,%s)\n",++line,yytext);return PLUS_AND_ASSIGNOP;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 68 "test.lex"
+#line 70 "test.lex"
 {printf("line%d:(求差赋值,%s)\n",++line,yytext);return MINUS_AND_ASSIGNOP;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 69 "test.lex"
+#line 71 "test.lex"
 {printf("line%d:(自增,%s)\n",++line,yytext);return PLUS_ONE;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 70 "test.lex"
+#line 72 "test.lex"
 {printf("line%d:(自减,%s)\n",++line,yytext);return MINUS_ONE;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 71 "test.lex"
+#line 73 "test.lex"
 {printf("line%d:(求积运算,%s)\n",++line,yytext);return STAR;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 72 "test.lex"
+#line 74 "test.lex"
 {printf("line%d:(求商运算,%s)\n",++line,yytext);return DIV;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 73 "test.lex"
+#line 75 "test.lex"
 {printf("line%d:(模运算,%s)\n",++line,yytext);return MODULO;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 74 "test.lex"
+#line 76 "test.lex"
 {printf("line%d:(与运算,%s)\n",++line,yytext);return AND;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 75 "test.lex"
+#line 77 "test.lex"
 {printf("line%d:(或运算,%s)\n",++line,yytext);return OR;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 76 "test.lex"
+#line 78 "test.lex"
 {printf("line%d:(取非,%s)\n",++line,yytext);return NOT;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 77 "test.lex"
+#line 79 "test.lex"
 {printf("line%d:(左括号,%s)\n",++line,yytext);return LP;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 78 "test.lex"
+#line 80 "test.lex"
 {printf("line%d:(右括号,%s)\n",++line,yytext);return RP;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 79 "test.lex"
+#line 81 "test.lex"
 {printf("line%d:(左括号,%s)\n",++line,yytext);return LD;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 80 "test.lex"
+#line 82 "test.lex"
 {printf("line%d:(右括号,%s)\n",++line,yytext);return RD;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 81 "test.lex"
+#line 83 "test.lex"
 {printf("line%d:(左括号,%s)\n",++line,yytext);return LC;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 82 "test.lex"
+#line 84 "test.lex"
 {printf("line%d:(右括号,%s)\n",++line,yytext);return RC;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 83 "test.lex"
+#line 85 "test.lex"
 {printf("line%d:(变量,%s)\n",++line,yytext);strcpy(yylval.type_id,yytext); return ID;}
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 84 "test.lex"
+#line 86 "test.lex"
 {++line;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 85 "test.lex"
+#line 87 "test.lex"
 {}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 86 "test.lex"
+#line 88 "test.lex"
 {printf("Error type A :Mysterious character \"%s\"\n\t at Line %d\n",yytext,yylineno);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 87 "test.lex"
+#line 89 "test.lex"
 ECHO;
 	YY_BREAK
-#line 1075 "lex.yy.c"
+#line 1077 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2077,11 +2079,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 86 "test.lex"
+#line 88 "test.lex"
 
 
 int yywrap() 
 { 
-	getchar();
+	system("pause");
     return 1; 
 } 

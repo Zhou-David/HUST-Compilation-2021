@@ -128,7 +128,7 @@ union YYSTYPE
 
 	int    type_int;
     float type_float;
-	char*  type_string;
+	char  type_string[1024];
     char  type_bool[5];
 	char   type_id[32];
 	struct ASTNode *ptr;

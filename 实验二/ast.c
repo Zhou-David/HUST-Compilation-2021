@@ -127,6 +127,7 @@ void display(struct ASTNode *T,int indent)
     case BOOL:          printf("%*cBOOL: %s\n", indent, ' ', T->type_bool);
                         break;
     case STRING:        printf("%*cSTRING: %s\n", indent, ' ', T->type_string);
+                        break;
 	case ASSIGNOP:
 	case AND:
 	case OR:
