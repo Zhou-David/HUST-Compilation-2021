@@ -74,6 +74,16 @@ void display(struct ASTNode *T,int indent)
                         printf("%*c循环体：(%d)\n",indent+3,' ',T->pos);
                         display(T->ptr[1],indent+6);      //显示循环体
                         break;
+    case FOR:           printf("%*c循环语句：(%d)\n", indent, ' ', T->pos);
+                        printf("%*c初始赋值语句：\n", indent + 3, ' ');
+                        display(T->ptr[0], indent + 6);
+                        printf("%*c循环条件：\n", indent + 3, ' ');
+                        display(T->ptr[1], indent + 6);
+                        printf("%*c块结束语句：\n", indent + 3, ' ');
+                        display(T->ptr[2], indent + 6);
+                        printf("%*c循环体：(%d)\n", indent + 3, ' ', T->pos);
+                        display(T->ptr[3], indent + 6);
+                        break;
 	case IF_THEN:       printf("%*c条件语句(IF_THEN)：(%d)\n",indent,' ',T->pos);
                         printf("%*c条件：\n",indent+3,' ');
                         display(T->ptr[0],indent+6);      //显示条件
@@ -114,12 +124,19 @@ void display(struct ASTNode *T,int indent)
                         break;
 	case FLOAT:	        printf("%*cFLAOT：%f\n",indent,' ',T->type_float);
                         break;
+    case BOOL:          printf("%*cBOOL: %s\n", indent, ' ', T->type_bool);
+                        break;
+    case STRING:        printf("%*cSTRING: %s\n", indent, ' ', T->type_string);
 	case ASSIGNOP:
 	case AND:
 	case OR:
 	case RELOP:
 	case PLUS:
+    case PLUS_AND_ASSIGNOP:
+    case PLUS_ONE:
 	case MINUS:
+    case MINUS_AND_ASSIGNOP:
+    case MINUS_ONE:
 	case STAR:
 	case DIV:
                     printf("%*c%s\n",indent,' ',T->type_id);

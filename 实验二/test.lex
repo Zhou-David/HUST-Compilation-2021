@@ -56,7 +56,7 @@ type        ("bool"|"void"|"char"|"int"|"string")
 {type}      {printf("line%d:(类型,%s)\n",++line,yytext);strcpy(yylval.type_id,  yytext);return TYPE;}
 {Escape}    {printf("line%d:(转义字符,%s)\n",++line,yytext);}
 {boolConstant}  {printf("line%d:(布尔常量,%s)\n",++line,yytext);return BOOL;}
-{intConstant}   {printf("line%d:(整型常量,%s)\n",++line,yytext);return INT;}
+{intConstant}   {printf("line%d:(整型常量,%s)\n",++line,yytext);yylval.type_int=atoi(yytext);return INT;}
 {stringConstant}    {printf("line%d:(字符串常量,%s)\n",++line,yytext);return STRING;}
 ";"         {printf("line%d:(分号,%s)\n",++line,yytext);return SEMI;}
 ","         {printf("line%d:(逗号,%s)\n",++line,yytext);return COMMA;}
@@ -82,9 +82,11 @@ type        ("bool"|"void"|"char"|"int"|"string")
 "}"         {printf("line%d:(右括号,%s)\n",++line,yytext);return RC;}
 {identifier}    {printf("line%d:(变量,%s)\n",++line,yytext);strcpy(yylval.type_id,yytext); return ID;}
 [\n]        {++line;}
+[ \r\t]     {}
 .           {printf("Error type A :Mysterious character \"%s\"\n\t at Line %d\n",yytext,yylineno);}
 %%
 int yywrap() 
 { 
-   return 1; 
+	getchar();
+    return 1; 
 } 

@@ -1,21 +1,15 @@
-int a, b, c;
-float m, n;
-int fibo(int a)
+int a = 1, b = 2, c = 3;
+for (int i = 0; i < 10; i++)
 {
-	if (a == 1 || a == 2)
-		return 1;
-	return fibo(a - 1) + fibo(a - 2);
+	for (int j = 0; j < 10; j++)
+		printf("%4d\t", j);
+	printf("\n");
 }
-int main()
+string n = "abcdefghijk";
+bool m = 1;
+while (m)
 {
-	int m, n, i;
-	m = read();
-	i = 1;
-	while (i <= m)
-	{
-		n = fibo(i);
-		write(n);
-		i = i + 1;
-	}
-	return 1;
+	if (a < b)
+		break;
+	a++;
 }

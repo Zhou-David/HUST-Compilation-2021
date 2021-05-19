@@ -89,12 +89,20 @@ void prnIR(struct codenode *head){
              sprintf(opnstr1,"#%d",h->opn1.const_int);
         if (h->opn1.kind==FLOAT)
              sprintf(opnstr1,"#%f",h->opn1.const_float);
+        if (h->opn1.kind==BOOL)
+            sprintf(opnstr1, "%s", h->opn1.const_bool);
+        if (h->opn1.kind == STRING)
+            sprintf(opnstr1, "%s", h->opn1.const_string);
         if (h->opn1.kind==ID)
              sprintf(opnstr1,"%s",h->opn1.id);
         if (h->opn2.kind==INT)
              sprintf(opnstr2,"#%d",h->opn2.const_int);
         if (h->opn2.kind==FLOAT)
              sprintf(opnstr2,"#%f",h->opn2.const_float);
+        if (h->opn2.kind == BOOL)
+            sprintf(opnstr2, "%s", h->opn2.const_bool);
+        if (h->opn2.kind == STRING)
+            sprintf(opnstr2, "%s", h->opn2.const_string);
         if (h->opn2.kind==ID)
              sprintf(opnstr2,"%s",h->opn2.id);
         sprintf(resultstr,"%s",h->result.id);
@@ -102,10 +110,16 @@ void prnIR(struct codenode *head){
             case ASSIGNOP:  printf("  %s := %s\n",resultstr,opnstr1);
                             break;
             case PLUS:
+            case PLUS_AND_ASSIGNOP:
+            case PLUS_ONE:
             case MINUS:
+            case MINUS_AND_ASSIGNOP:
+            case MINUS_ONE:
             case STAR:
-            case DIV: printf("  %s := %s %c %s\n",resultstr,opnstr1, \
-                      h->op==PLUS?'+':h->op==MINUS?'-':h->op==STAR?'*':'\\',opnstr2);
+            case DIV: printf("  %s := %s %s %s\n", resultstr, opnstr1, \
+                h->op == PLUS ? "+" : h->op == MINUS ? "-" : h->op == STAR ? "*" : \
+                h->op == PLUS_AND_ASSIGNOP ? "+=" : h->op == PLUS_ONE ? "++" : \
+                h->op == MINUS_AND_ASSIGNOP ? "-=" : h->op == MINUS_ONE ? "--" : "\\", opnstr2);
                       break;
             case FUNCTION: printf("\nFUNCTION %s :\n",h->result.id);
                            break;
@@ -154,7 +168,7 @@ void prn_symbol(){ //ÏÔÊ¾·ûºÅ±í
     for(i=0;i<symbolTable.index;i++)
         printf("%6s %6s %6d  %6s %4c %6d\n",symbolTable.symbols[i].name,\
                 symbolTable.symbols[i].alias,symbolTable.symbols[i].level,\
-                symbolTable.symbols[i].type==INT?"int":"float",\
+                symbolTable.symbols[i].type==INT?"int": symbolTable.symbols[i].type == BOOL?"bool":"string",\
                 symbolTable.symbols[i].flag,symbolTable.symbols[i].offset);
 }
 

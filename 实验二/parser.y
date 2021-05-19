@@ -14,8 +14,9 @@ void display(struct ASTNode *,int);
 
 %union {
 	int    type_int;
-	string  type_string;
-    bool    type_bool;
+    float type_float;
+	char*  type_string;
+    char  type_bool[5];
 	char   type_id[32];
 	struct ASTNode *ptr;
 };
@@ -28,6 +29,7 @@ void display(struct ASTNode *,int);
 %token <type_id> ID  RELOP TYPE    /*指定ID,RELOP 的语义值是type_id，有词法分析得到的标识符字符串*/
 %token <type_string> STRING          /*指定ID的语义值是type_id，有词法分析得到的标识符字符串*/
 %token <type_bool> BOOL
+%token <type_float> FLOAT
 
 %token DPLUS LP RP LD RD LC RC SEMI COMMA      /*用bison对该文件编译时，带参数-d，生成的.tab.h中给这些单词进行编码，可在lex.l中包含parser.tab.h使用这些单词种类码*/
 %token PLUS PLUS_AND_ASSIGNOP PLUS_ONE MINUS MINUS_AND_ASSIGNOP MINUS_ONE STAR DIV MODULO ASSIGNOP AND OR NOT IF ELSE WHILE RETURN FOR BREAK CONTINUE SWITCH CASE COLON DEFAULT
@@ -88,7 +90,7 @@ Stmt:   Exp SEMI    {$$=mknode(1,EXP_STMT,yylineno,$1);}
       | IF LP Exp RP Stmt %prec LOWER_THEN_ELSE   {$$=mknode(2,IF_THEN,yylineno,$3,$5);}
       | IF LP Exp RP Stmt ELSE Stmt   {$$=mknode(3,IF_THEN_ELSE,yylineno,$3,$5,$7);}
       | WHILE LP Exp RP Stmt {$$=mknode(2,WHILE,yylineno,$3,$5);}
-      | FOR LP Exp SEMI Exp SEMI Exp RP Stmt {$$=mknode(2,FOR,yylineno,$3,$5)} 
+      | FOR LP Exp SEMI Exp SEMI Exp RP Stmt {$$=mknode(2,FOR,yylineno,$3,$5);} 
       ;
 DefList: {$$=NULL; }
         | Def DefList {$$=mknode(2,DEF_LIST,yylineno,$1,$2);}
@@ -124,8 +126,9 @@ Exp:    Exp ASSIGNOP Exp {$$=mknode(2,ASSIGNOP,yylineno,$1,$3);strcpy($$->type_i
       | ID LP RP      {$$=mknode(0,FUNC_CALL,yylineno);strcpy($$->type_id,$1);}
       | ID            {$$=mknode(0,ID,yylineno);strcpy($$->type_id,$1);}
       | INT           {$$=mknode(0,INT,yylineno);$$->type_int=$1;$$->type=INT;}
+      | FLOAT         {$$=mknode(0,FLOAT,yylineno);$$->type_float=$1;$$->type=FLOAT;}
       | STRING        {$$=mknode(0,STRING,yylineno);$$->type_string=$1;$$->type=STRING;}
-      | BOOL          {$$=mknode(0,BOOL,yylineno);$$->type_bool=$1;$$->type=BOOL;}
+      | BOOL          {$$=mknode(0,BOOL,yylineno);strcpy($$->type_bool,$1);;$$->type=BOOL;}
       ;
 Args:    Exp COMMA Args    {$$=mknode(2,ARGS,yylineno,$1,$3);}
        | Exp               {$$=mknode(1,ARGS,yylineno,$1);}
