@@ -89,33 +89,35 @@ extern int yydebug;
     EXT_VAR_DEF = 299,
     FUNC_DEF = 300,
     FUNC_DEC = 301,
-    EXT_DEC_LIST = 302,
-    PARAM_LIST = 303,
-    PARAM_DEC = 304,
-    VAR_DEF = 305,
-    DEC_LIST = 306,
-    DEF_LIST = 307,
-    COMP_STM = 308,
-    STM_LIST = 309,
-    EXP_STMT = 310,
-    IF_THEN = 311,
-    IF_THEN_ELSE = 312,
-    FUNC_CALL = 313,
-    ARGS = 314,
-    FUNCTION = 315,
-    PARAM = 316,
-    ARG = 317,
-    CALL = 318,
-    LABEL = 319,
-    GOTO = 320,
-    JLT = 321,
-    JLE = 322,
-    JGT = 323,
-    JGE = 324,
-    EQ = 325,
-    NEQ = 326,
-    UMINUS = 327,
-    LOWER_THEN_ELSE = 328
+    ARRAY_DEC = 302,
+    ARRAY_DEF = 303,
+    EXT_DEC_LIST = 304,
+    PARAM_LIST = 305,
+    PARAM_DEC = 306,
+    VAR_DEF = 307,
+    DEC_LIST = 308,
+    DEF_LIST = 309,
+    COMP_STM = 310,
+    STM_LIST = 311,
+    EXP_STMT = 312,
+    IF_THEN = 313,
+    IF_THEN_ELSE = 314,
+    FUNC_CALL = 315,
+    ARGS = 316,
+    FUNCTION = 317,
+    PARAM = 318,
+    ARG = 319,
+    CALL = 320,
+    LABEL = 321,
+    GOTO = 322,
+    JLT = 323,
+    JLE = 324,
+    JGT = 325,
+    JGE = 326,
+    EQ = 327,
+    NEQ = 328,
+    UMINUS = 329,
+    LOWER_THEN_ELSE = 330
   };
 #endif
 
@@ -133,7 +135,7 @@ union YYSTYPE
 	char   type_id[32];
 	struct ASTNode *ptr;
 
-#line 137 "parser.tab.h" /* yacc.c:1909  */
+#line 139 "parser.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
