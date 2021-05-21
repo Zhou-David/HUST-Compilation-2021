@@ -12,7 +12,7 @@
 ## 使用说明
 ### 实验二
 
-1.  在实验二对应目录下打开cmd命令行（即在文件路径中输入cmd回车即可），如图<br>![打开cmd命令行]     (https://images.gitee.com/uploads/images/2021/0521/143610_3cc74f45_8206880.png "屏幕截图.png")
+1.  在实验二对应目录下打开cmd命令行（即在文件路径中输入cmd回车即可），如图<br>![打开cmd命令行](https://images.gitee.com/uploads/images/2021/0521/143610_3cc74f45_8206880.png "屏幕截图.png")
 2.  依次输入如下指令：
 ```
 >flex test.lex
