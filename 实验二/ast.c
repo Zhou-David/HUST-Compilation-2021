@@ -41,6 +41,10 @@ void display(struct ASTNode *T,int indent)
                         display(T->ptr[1],indent+3);      //显示函数名和参数
                         display(T->ptr[2],indent+3);      //显示函数体
                         break;
+    case ARRAY_DEF:     printf("%*c%s\n", indent, ' ', "数组定义：");
+                        display(T->ptr[0], indent + 3);
+                        display(T->ptr[1], indent + 3);
+                        break;
 	case FUNC_DEC:      printf("%*c函数名：%s\n",indent,' ',T->type_id);
                         if (T->ptr[0]) {
                                 printf("%*c函数形参：\n",indent,' ');
@@ -48,15 +52,19 @@ void display(struct ASTNode *T,int indent)
                                 }
                         else printf("%*c无参函数\n",indent+3,' ');
                         break;
+    case ARRAY_DEC:     printf("%*c%s%s\n", indent, ' ', "数组名：", T->type_id);
+                        printf("%*c%s\n", indent, ' ', "数组大小：");
+                        display(T->ptr[0], indent + 3);
+                        break;
 	case PARAM_LIST:    display(T->ptr[0],indent);     //依次显示全部参数类型和名称，
                         display(T->ptr[1],indent);
                         break;
-	case PARAM_DEC:     printf("%*c类型：%s, 参数名：%s\n",indent,' ',T->ptr[0]->type==INT?"int":"float",T->ptr[1]->type_id);
+    case PARAM_DEC:     printf("%*c类型：%s, 参数名：%s\n",indent,' ',T->ptr[0]->type==INT?"int": T->ptr[0]->type == BOOL ?"bool":"string" ,T->ptr[1]->type_id);
                         break;
 	case EXP_STMT:      printf("%*c表达式语句：(%d)\n",indent,' ',T->pos);
                         display(T->ptr[0],indent+3);
                         break;
-	case RETURN:        printf("%*c返回语句：(%d)\n",indent,' ',T->pos);
+	case RETURN:        printf("%*c返回语句(RETURN)：(%d)\n",indent,' ',T->pos);
                         display(T->ptr[0],indent+3);
                         break;
 	case COMP_STM:      printf("%*c复合语句：(%d)\n",indent,' ',T->pos);
@@ -68,13 +76,13 @@ void display(struct ASTNode *T,int indent)
 	case STM_LIST:      display(T->ptr[0],indent);      //显示第一条语句
                         display(T->ptr[1],indent);        //显示剩下语句
                         break;
-	case WHILE:         printf("%*c循环语句：(%d)\n",indent,' ',T->pos);
+	case WHILE:         printf("%*c循环语句(WHILE)：(%d)\n",indent,' ',T->pos);
                         printf("%*c循环条件：\n",indent+3,' ');
                         display(T->ptr[0],indent+6);      //显示循环条件
                         printf("%*c循环体：(%d)\n",indent+3,' ',T->pos);
                         display(T->ptr[1],indent+6);      //显示循环体
                         break;
-    case FOR:           printf("%*c循环语句：(%d)\n", indent, ' ', T->pos);
+    case FOR:           printf("%*c循环语句(FOR)：(%d)\n", indent, ' ', T->pos);
                         printf("%*c初始赋值语句：\n", indent + 3, ' ');
                         display(T->ptr[0], indent + 6);
                         printf("%*c循环条件：\n", indent + 3, ' ');
@@ -83,6 +91,10 @@ void display(struct ASTNode *T,int indent)
                         display(T->ptr[2], indent + 6);
                         printf("%*c循环体：(%d)\n", indent + 3, ' ', T->pos);
                         display(T->ptr[3], indent + 6);
+                        break;
+    case BREAK:         printf("%*c跳出循环语句(BREAK)：(%d)\n", indent, ' ', T->pos);
+                        break;
+    case CONTINUE:      printf("%*c继续循环语句(CONTINUE)：(%d)\n", indent, ' ', T->pos);
                         break;
 	case IF_THEN:       printf("%*c条件语句(IF_THEN)：(%d)\n",indent,' ',T->pos);
                         printf("%*c条件：\n",indent+3,' ');

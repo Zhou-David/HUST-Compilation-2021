@@ -493,7 +493,7 @@ void semantic_Analysis(struct ASTNode *T)
                 }
             break;
 	case EXT_VAR_DEF:   //处理外部说明,将第一个孩子(TYPE结点)中的类型送到第二个孩子的类型域
-            T->type=T->ptr[1]->type=!strcmp(T->ptr[0]->type_id,"int")?INT:FLOAT;
+            T->type=T->ptr[1]->type=!strcmp(T->ptr[0]->type_id,"int")?INT: !strcmp(T->ptr[0]->type_id, "bool")?BOOL:STRING;
             T->ptr[1]->offset=T->offset;        //这个外部变量的偏移量向下传递
             T->ptr[1]->width=T->type==INT?4:8;  //将一个变量的宽度向下传递
             ext_var_list(T->ptr[1]);            //处理外部变量说明中的标识符序列
@@ -501,7 +501,7 @@ void semantic_Analysis(struct ASTNode *T)
             T->code=NULL;             //这里假定外部变量不支持初始化
             break;
 	case FUNC_DEF:      //填写函数定义信息到符号表
-            T->ptr[1]->type=!strcmp(T->ptr[0]->type_id,"int")?INT:FLOAT;//获取函数返回类型送到含函数名、参数的结点
+            T->ptr[1]->type=!strcmp(T->ptr[0]->type_id,"int")?INT: strcmp(T->ptr[0]->type_id, "bool") ?BOOL:STRING ;//获取函数返回类型送到含函数名、参数的结点
             T->width=0;     //函数的宽度设置为0，不会对外部变量的地址分配产生影响
             T->offset=DX;   //设置局部变量在活动记录中的偏移量初值
             semantic_Analysis(T->ptr[1]); //处理函数名和参数结点部分，这里不考虑用寄存器传递参数

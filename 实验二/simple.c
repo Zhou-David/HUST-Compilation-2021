@@ -23,7 +23,7 @@ int main()
 	int count = 0;
 	while (bl)
 	{
-		printf("%d ", alist[count]);
+		printf("%d",alist[count]);
 		if (count >= 10) break;
 		else continue;
 	}
