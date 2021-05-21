@@ -14,20 +14,20 @@
 
 1.  在实验二对应目录下打开cmd命令行（即在文件路径中输入cmd回车即可），如图<br>![打开cmd命令行](https://images.gitee.com/uploads/images/2021/0521/143610_3cc74f45_8206880.png "屏幕截图.png")
 2.  依次输入如下指令：
-```
->flex test.lex
->bison -d parser.y
->gcc -o parser.exe lex.yy.c parser.tab.c ast.c middle.c
-```
-然后得到parser.exe后，即可进行词法分析的测试。<br>
+    ```
+    >flex test.lex
+    >bison -d parser.y
+    >gcc -o parser.exe lex.yy.c parser.tab.c ast.c middle.c
+    ```
+    然后得到parser.exe后，即可进行词法分析的测试。<br>
 3.  自行写好测试文件`simple.c`然后输入如下指令进行测试：
-```
->parser.exe simple.c
-```
-    
-第一部分输出是词法分析，如果有语法错误，也会进行相应输出；<br>
-第二部分输出是抽象语法树，如果前一部分输出语法错误，则这部分不会进行输出；<br>
-第三部分第四部分暂时不用管。<br>
+    ```
+    >parser.exe simple.c
+    ```
+        
+    第一部分输出是词法分析，如果有语法错误，也会进行相应输出；<br>
+    第二部分输出是抽象语法树，如果前一部分输出语法错误，则这部分不会进行输出；<br>
+    第三部分第四部分暂时不用管。
 4.  文件说明：
     `test.lex`是词法分析部分，.lex文件的语法不在这里赘述，请自行学习！！！<br>
     `parser.y`是语法分析部分，.y文件的语法不在这里赘述，请自行学习！！！<br>
