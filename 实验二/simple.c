@@ -1,4 +1,10 @@
 int a,b,c;
+struct test_struct
+{
+	int x;
+	float y;
+	string name;
+};
 int main()
 {
 	bool x;
@@ -28,3 +34,9 @@ int main()
 		else continue;
 	}
 }
+struct POINT
+{
+	int x;
+	float y;
+	string name;
+};

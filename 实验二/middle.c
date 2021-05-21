@@ -160,7 +160,7 @@ void prnIR(struct codenode *head){
 }
 void semantic_error(int line,char *msg1,char *msg2){
     //这里可以只收集错误信息，最后一次显示
-    printf("在%d行,%s %s\n",line,msg1,msg2);
+    //printf("在%d行,%s %s\n",line,msg1,msg2);
 }
 void prn_symbol(){ //显示符号表
     int i=0;
@@ -580,8 +580,8 @@ void semantic_Analysis(struct ASTNode *T)
                 T->code=merge(2,T->code,T->ptr[1]->code);
                 }
              #if (DEBUG)
-                prn_symbol();       //c在退出一个符合语句前显示的符号表
-			  system("pause");
+               // prn_symbol();       //c在退出一个符合语句前显示的符号表
+			 // system("pause");
              #endif
              LEV--;    //出复合语句，层号减1
              symbolTable.index=symbol_scope_TX.TX[--symbol_scope_TX.top]; //删除该作用域中的符号
@@ -755,6 +755,6 @@ void semantic_Analysis0(struct ASTNode *T) {
     symbol_scope_TX.top=1;
     T->offset=0;              //外部变量在数据区的偏移量
     semantic_Analysis(T);
-    prnIR(T->code);
+   // prnIR(T->code);
     //objectCode(T->code);
  } 

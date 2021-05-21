@@ -32,6 +32,9 @@ intConstant {Digit}+|{Fnum}{Hnum}+
 Fnum        ("0x"|"0X")
 Hnum        {Digit}|[a-fA-F]
 
+/*浮点常量*/
+floatConstant [0-9]*[.][0-9]+([eE][-+]?([1-9][0-9*]|[0]))?
+
 /*布尔常量*/
 boolConstant    ("true"|"false")
 
@@ -43,7 +46,7 @@ chars           .
 compare     ("<"|">"|"<="|">="|"=="|"!=")
 
 /*变量类型*/
-type        ("bool"|"void"|"char"|"int"|"string")
+type        ("bool"|"void"|"char"|"int"|"string"|"float")
 
 %%
 \/\/[^\n]*  {printf("line%d:(注释行,%s)\n",line,yytext);}//匹配注释的正则表达式
@@ -55,13 +58,16 @@ type        ("bool"|"void"|"char"|"int"|"string")
 "for"       {printf("line%d:(循环,%s)\n",line,yytext);return FOR;}
 "break"     {printf("line%d:(跳出循环,%s)\n",line,yytext);return BREAK;}
 "continue"  {printf("line%d:(继续循环,%s)\n",line,yytext);return CONTINUE;}
+"struct"	{printf("line%d:(结构体,%s)\n",line,yytext);return STRUCT;}//struct
 {type}      {printf("line%d:(类型,%s)\n",line,yytext);strcpy(yylval.type_id,  yytext);return TYPE;}
 {Escape}    {printf("line%d:(转义字符,%s)\n",line,yytext);}
 {boolConstant}  {printf("line%d:(布尔常量,%s)\n",line,yytext);strcpy(yylval.type_bool,  yytext);return BOOL;}
 {intConstant}   {printf("line%d:(整型常量,%s)\n",line,yytext);yylval.type_int=atoi(yytext);return INT;}
+{floatConstant} {printf("line%d:(浮点常量,%s)\n",line,yytext);yylval.type_float=atof(yytext); return FLOAT;}
 {stringConstant}    {printf("line%d:(字符串常量,%s)\n",line,yytext);strcpy(yylval.type_string,  yytext);return STRING;}
 ";"         {printf("line%d:(分号,%s)\n",line,yytext);return SEMI;}
 ","         {printf("line%d:(逗号,%s)\n",line,yytext);return COMMA;}
+"."			{printf("line%d:(点号,%s)\n",line,yytext);return DOT;}	
 {compare}   { printf("line%d:(比较运算,%s)\n",line,yytext);strcpy(yylval.type_id, yytext);return RELOP;}
 "="         {printf("line%d:(赋值运算,%s)\n",line,yytext);return ASSIGNOP;}
 "+"         {printf("line%d:(求和运算,%s)\n",line,yytext);return PLUS;}
