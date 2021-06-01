@@ -12,12 +12,12 @@
 ## 使用说明
 ### 实验二
 
-1.  在实验二对应目录下打开cmd命令行（即在文件路径中输入cmd回车即可），如图<br>![打开cmd命令行](https://images.gitee.com/uploads/images/2021/0521/143610_3cc74f45_8206880.png "屏幕截图.png")
+1.  在实验二对应目录下打开cmd命令行（即在文件路径中输入cmd回车即可），如图<br>![打开cmd命令行](https://images.gitee.com/uploads/images/2021/0601/184635_adabdc8f_8206880.png "屏幕截图.png")
 2.  依次输入如下指令：
     ```
     >flex DavidC.lex
     >bison -d parser.y
-    >gcc -o parser.exe lex.yy.c parser.tab.c ast.c middle.c
+    >gcc -o parser.exe lex.yy.c parser.tab.c ast.c
     ```
     然后得到parser.exe后，即可进行词法分析的测试。<br>
 3.  自行写好测试文件`simple.c`然后输入如下指令进行测试：
@@ -31,8 +31,9 @@
     `test.lex`是词法分析部分，.lex文件的语法不在这里赘述，请自行学习！！！<br>
     `parser.y`是语法分析部分，.y文件的语法不在这里赘述，请自行学习！！！<br>
     `lex.yy.c`是执行 **flex** 指令后得到的生成文件；<br>
-    `parser.tab.c`和`parser.tab.h`是执行 **bison** 指令后得到的生成文件；
-    `def.h`是相关定义的头文件，在 **编译原理实验指导教程2020** 的附录中已给出；
-    `ast.c`是抽象语法树输出部分，此部分用大量的switch-case语句进行相关结点输出，可以自行查看和修改；
-    `middle.c`是中间代码生成部分，在 **编译原理实验指导教程2020** 的附录中已给出；
-5.  如果以上指令均运行成功，则输出如下：<br>![词法&语法分析输出样例](https://images.gitee.com/uploads/images/2021/0521/144600_44eff09b_8206880.png "屏幕截图.png")
+    `parser.tab.c`和`parser.tab.h`是执行 **bison** 指令后得到的生成文件；<br>
+    `def.h`是相关定义的头文件，在 **编译原理实验指导教程2020** 的附录中已给出；<br>
+    `ast.c`是抽象语法树输出部分，此部分用大量的switch-case语句进行相关结点输出，可以自行查看和修改；<br>
+    `middle.c`是中间代码生成部分，在 **编译原理实验指导教程2020** 的附录中已给出；<br>
+    `simple.c`是分词测试文件，可自行合理修改进行调试。
+5.  如果以上指令均运行成功，则输出如下：<br>![词法&语法分析输出样例](https://images.gitee.com/uploads/images/2021/0601/185157_239bcec3_8206880.png "屏幕截图.png")
