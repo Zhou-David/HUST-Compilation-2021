@@ -91,6 +91,8 @@ void prnIR(struct codenode *head){
              sprintf(opnstr1,"#%f",h->opn1.const_float);
         if (h->opn1.kind==BOOL)
             sprintf(opnstr1, "%s", h->opn1.const_bool);
+        if (h->opn1.kind==CHAR)
+            sprintf(opnstr1, "%s", h->opn1.const_char);
         if (h->opn1.kind == STRING)
             sprintf(opnstr1, "%s", h->opn1.const_string);
         if (h->opn1.kind==ID)
@@ -110,16 +112,16 @@ void prnIR(struct codenode *head){
             case ASSIGNOP:  printf("  %s := %s\n",resultstr,opnstr1);
                             break;
             case PLUS:
-            case PLUS_AND_ASSIGNOP:
-            case PLUS_ONE:
+            case PLUSASSIGNOP:
+            case AUTOPLUS:
             case MINUS:
-            case MINUS_AND_ASSIGNOP:
-            case MINUS_ONE:
+            case MINUSASSIGNOP:
+            case AUTOMINUS:
             case STAR:
             case DIV: printf("  %s := %s %s %s\n", resultstr, opnstr1, \
                 h->op == PLUS ? "+" : h->op == MINUS ? "-" : h->op == STAR ? "*" : \
-                h->op == PLUS_AND_ASSIGNOP ? "+=" : h->op == PLUS_ONE ? "++" : \
-                h->op == MINUS_AND_ASSIGNOP ? "-=" : h->op == MINUS_ONE ? "--" : "\\", opnstr2);
+                h->op == PLUSASSIGNOP ? "+=" : h->op == AUTOPLUS ? "++" : \
+                h->op == MINUSASSIGNOP ? "-=" : h->op == AUTOMINUS ? "--" : "\\", opnstr2);
                       break;
             case FUNCTION: printf("\nFUNCTION %s :\n",h->result.id);
                            break;

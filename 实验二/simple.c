@@ -9,6 +9,8 @@ int main()
 {
 	bool x;
 	int alist[10];
+	bool bl = true;
+	int count = 0;
 	for (int i = 0; i < 10; i++)
 	{
 		alist[i] = 10 - i;
@@ -25,8 +27,6 @@ int main()
 			}
 		}
 	}
-	bool bl = true;
-	int count = 0;
 	while (bl)
 	{
 		printf("%d",alist[count]);
