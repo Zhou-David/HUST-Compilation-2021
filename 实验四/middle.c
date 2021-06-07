@@ -162,16 +162,39 @@ void prnIR(struct codenode *head){
 }
 void semantic_error(int line,char *msg1,char *msg2){
     //这里可以只收集错误信息，最后一次显示
-    //printf("在%d行,%s %s\n",line,msg1,msg2);
+    printf("在%d行,%s %s\n",line,msg1,msg2);
 }
 void prn_symbol(){ //显示符号表
     int i=0;
     printf("%6s %6s %6s  %6s %4s %6s\n","变量名","别 名","层 号","类  型","标记","偏移量");
-    for(i=0;i<symbolTable.index;i++)
-        printf("%6s %6s %6d  %6s %4c %6d\n",symbolTable.symbols[i].name,\
-                symbolTable.symbols[i].alias,symbolTable.symbols[i].level,\
-                symbolTable.symbols[i].type==INT?"int": symbolTable.symbols[i].type == BOOL?"bool":"string",\
-                symbolTable.symbols[i].flag,symbolTable.symbols[i].offset);
+    for (i = 0; i < symbolTable.index; i++) {
+        char* type;
+        switch (symbolTable.symbols[i].type)
+        {
+        case INT:
+            type = "int";
+            break;
+        case CHAR:
+            type = "char";
+            break;
+        case STRING:
+            type = "string";
+            break;
+        case FLOAT:
+            type = "float";
+            break;
+        case BOOL:
+            type = "bool";
+            break;
+        default:
+            type = NULL;
+            break;
+        }
+        printf("%6s %6s %6d  %6s %4c %6d\n", symbolTable.symbols[i].name, \
+            symbolTable.symbols[i].alias, symbolTable.symbols[i].level, \
+            type, \
+            symbolTable.symbols[i].flag, symbolTable.symbols[i].offset);
+    }
 }
 
 int searchSymbolTable(char *name) {
@@ -582,8 +605,8 @@ void semantic_Analysis(struct ASTNode *T)
                 T->code=merge(2,T->code,T->ptr[1]->code);
                 }
              #if (DEBUG)
-               // prn_symbol();       //c在退出一个符合语句前显示的符号表
-			 // system("pause");
+                prn_symbol();       //c在退出一个符合语句前显示的符号表
+			    system("pause");
              #endif
              LEV--;    //出复合语句，层号减1
              symbolTable.index=symbol_scope_TX.TX[--symbol_scope_TX.top]; //删除该作用域中的符号
@@ -606,7 +629,11 @@ void semantic_Analysis(struct ASTNode *T)
     case VAR_DEF://处理一个局部变量定义,将第一个孩子(TYPE结点)中的类型送到第二个孩子的类型域
                  //类似于上面的外部变量EXT_VAR_DEF，换了一种处理方法
                 T->code=NULL;
-                T->ptr[1]->type=!strcmp(T->ptr[0]->type_id,"int")?INT:FLOAT;  //确定变量序列各变量类型
+                if (!strcmp(T->ptr[0]->type_id, "int")) T->ptr[1]->type = INT;
+                else if (!strcmp(T->ptr[0]->type_id, "float")) T->ptr[1]->type = FLOAT;
+                else if (!strcmp(T->ptr[0]->type_id, "char")) T->ptr[1]->type = CHAR;
+                else if (!strcmp(T->ptr[0]->type_id, "bool")) T->ptr[1]->type = BOOL;
+                else T->ptr[1]->type = STRING; //确定变量序列各变量类型
                 T0=T->ptr[1]; //T0为变量名列表子树根指针，对ID、ASSIGNOP类结点在登记到符号表，作为局部变量
                 num=0;
                 T0->offset=T->offset;
@@ -757,6 +784,6 @@ void semantic_Analysis0(struct ASTNode *T) {
     symbol_scope_TX.top=1;
     T->offset=0;              //外部变量在数据区的偏移量
     semantic_Analysis(T);
-   // prnIR(T->code);
+    //prnIR(T->code);
     //objectCode(T->code);
  } 

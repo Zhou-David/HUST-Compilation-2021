@@ -12,7 +12,7 @@
         int yylex();
         void yyerror(const char* fmt, ...);
         void display(struct ASTNode *,int);
-        //void displayRoot();
+        void displayRoot();
 %} 
 
 
@@ -68,7 +68,7 @@
 
 //规则定义部分
 %%
-program: ExtDefList    {/*displayRoot();*/display($1,0);semantic_Analysis0($1);}     //显示语法树,语义分析
+program: ExtDefList    {displayRoot();display($1,0);/*semantic_Analysis0($1);*/}     //显示语法树,语义分析
          ; 
 ExtDefList: {$$=NULL;}
           | ExtDef ExtDefList {$$=mknode(2,EXT_DEF_LIST,yylineno,$1,$2);}   //每一个EXTDEFLIST的结点，其第1棵子树对应一个外部变量声明或函数
